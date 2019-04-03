@@ -25,8 +25,8 @@ function drawMonthySales(values){
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',"August", "September","October","November","December"],
         datasets: [{
             label: 'Total Monthly Sales',
-            backgroundColor: 'rgba(255, 99, 132,0.5)',
-            borderColor: 'rgba(255, 255, 255,0.5)',
+            backgroundColor: 'rgba(232, 242, 255,0.5)',
+            borderColor: 'rgba(0, 0, 0,0.7)',
             data: values,
             tension: 0.2,
         },
