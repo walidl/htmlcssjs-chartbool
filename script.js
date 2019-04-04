@@ -9,7 +9,7 @@ function isNum(val) {
 
 // fa un ciclo do while su tre tipi di format
 // esce quando il format mi da mese diverso dalla stringa di errore "Invalid date"
-function getMonth(date){
+function getMonth(date, formato){
 
   var form = ["DD/MM/YYYY","MMMM","YYYY-MM-DD"];
 
@@ -22,9 +22,9 @@ function getMonth(date){
 
     } while ( mom.format("M") == "Invalid date" );
 
-    console.log(date, " - ", mom.format("MMMM"));
+    console.log(date, " - ", mom.format(formato));
 
-  return mom.format("MMMM");
+  return mom.format(formato);
 }
 
 function drawMonthySales( etichette, valori){
@@ -76,7 +76,7 @@ function monthlySales(inData){
 
   for (var i = 0; i < inData.length; i++) {
 
-    var mese = getMonth(inData[i].date);
+    var mese = getMonth(inData[i].date,"MMMM");
 
     monthsSales[mese] += Number(inData[i].amount);
 
@@ -229,16 +229,82 @@ function insertNewSale(months ,salesman){
   })
 
 }
+function drawQuarterNumbs(etichette , valori){
+
+  var elem = $("<canvas id='quarterSales'> </canvas>")
+  $(".grafico.third").empty().append(elem);
+
+  var ctx = document.getElementById('quarterSales').getContext('2d');
+
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: etichette,
+        datasets: [{
+            backgroundColor: ["#FFCD56", "#ff1e1e","#0F9D58","#5624c1" ],
+            borderColor: 'rgba(255, 255, 255,0.5)',
+            data: valori,
+            tension: 0.2,
+        },
+      ],
+    },
+
+    // Configuration options go here
+    options: { scales: {
+      yAxes: [{
+        display: true,
+        ticks: {
+          
+          beginAtZero: true   // minimum value will be 0.
+        }
+      }]
+      }
+    }
+
+  });
+
+}
+function quarterTrend(dati){
+
+  var quarterCount = {
+
+    "First quarter": 0,
+    "Second quarter": 0,
+    "Third quarter": 0,
+    "Fourth quarter": 0,
+  }
+
+  for (var i = 0; i < dati.length; i++) {
+
+    var mese = getMonth(dati[i].date,"M");
+
+    if(mese >= 1 && mese <= 3) { quarterCount["First quarter"] += 1; }
+    else if (mese >= 4 && mese <= 6) { quarterCount["Second quarter"] += 1; }
+    else if (mese >= 7 && mese <= 9) { quarterCount["Third quarter"] += 1; }
+    else if (mese >= 10 && mese <= 12) { quarterCount["Fourth quarter"] += 1; }
+
+  }
+
+  var keys = Object.keys(quarterCount);
+  var values = Object.values(quarterCount);
+
+  console.log(quarterCount);
+  drawQuarterNumbs(keys, values);
+}
 
 function manageData(info){
 
   var mesi = monthlySales(info);
   var venditori = salesPersentage(info);
-
+  quarterTrend(info);
   console.log(mesi);
   console.log(venditori);
 
-  insertNewSale(mesi , venditori)
+  insertNewSale(mesi , venditori);
+
 }
 
 function getData(){
