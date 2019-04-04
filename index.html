@@ -5,13 +5,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Moment -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <!-- SitePoint -->
+    <!-- Chart Js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
       <!-- JS: HANDLEBARS -->
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js" charset="utf-8"></script>
+      <script id="option-template" type="text/x-handlebars-template">
 
+        <option value="{{ val }}">{{ val }}</option>
+
+      </script>
     <meta charset="utf-8">
 
     <link rel="stylesheet" href="style.css">
@@ -21,12 +25,28 @@
   </head>
 
   <body >
+    <nav>
+
+      <div class=".container">
+        <select id="salesmanList" name="">
+
+        </select>
+        <select id="MonthsList" name="">
+
+        </select>
+        <input id="inputSale" name="" value="">
+        <button id="submitButton" type="button" name="button">Submit</button>
+      </div>
+
+    </nav>
+
     <div class="container">
+
 
       <h1>Monthly Sales Trend</h1>
       <canvas id="monthlySales"></canvas>
 
-      <h1>Salesman Performance</h1>  
+      <h1>Salesman Performance</h1>
       <canvas id="salesmanPie"></canvas>
     </div>
 

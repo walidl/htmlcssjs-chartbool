@@ -1,3 +1,12 @@
+function isNum(val) {
+	val = parseInt(val);
+ 	if( isNaN(val) ) {
+		return false
+ 	} else {
+		return true;
+	}
+}
+
 // fa un ciclo do while su tre tipi di format
 // esce quando il format mi da mese diverso dalla stringa di errore "Invalid date"
 function getMonth(date){
@@ -22,6 +31,7 @@ function drawMonthySales( etichette, valori){
 
   var ctx = document.getElementById('monthlySales').getContext('2d');
   var chart = new Chart(ctx, {
+
     // The type of chart we want to create
     type: 'line',
 
@@ -41,7 +51,11 @@ function drawMonthySales( etichette, valori){
     // Configuration options go here
     options: {}
   });
-  
+
+  // chart.reset();
+  // chart.clear();
+  // chart.render();
+  // chart.update();
 }
 
 function monthlySales(inData){
@@ -71,15 +85,16 @@ function monthlySales(inData){
   }
   var keys = Object.keys(monthsSales);
   var values = Object.values(monthsSales);
-
   // console.log(monthsSales);
   drawMonthySales(keys,values);
 
+  return keys;
 }
 
 function drawSalesPie(etichette , valori){
 
   var ctx = document.getElementById('salesmanPie').getContext('2d');
+
   var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'pie',
@@ -106,7 +121,10 @@ function drawSalesPie(etichette , valori){
       }
     }
   });
-  
+  // chart.reset();
+  // chart.clear();
+  // chart.render();
+  // chart.update();
 }
 
 function salesPersentage(dati){
@@ -136,12 +154,93 @@ function salesPersentage(dati){
   var values = Object.values(coppiaValori);
 
   drawSalesPie(keys , values);
+
+  return keys;
+}
+
+function setupOptions(months ,salesman){
+
+  var names = $("#salesmanList")
+  var mesi = $("#MonthsList");
+  names.empty();
+  mesi.empty();
+
+  var temp = $("#option-template").html();
+  var comp = Handlebars.compile(temp);
+
+  for (var i = 0; i < salesman.length; i++) {
+
+    var data = { val: salesman[i] };
+    var opt = comp(data);
+    names.append(opt);
+  }
+
+  for (var i = 0; i < months.length; i++) {
+
+    var data = { val: months[i] };
+    var opt = comp(data);
+    mesi.append(opt);
+  }
+
+}
+function postNewData(dati){
+
+  $.ajax({
+
+    url: "http://157.230.17.132:4013/sales",
+    method: "POST",
+    data: dati,
+    success: function(inData,state){
+
+      getData();
+    },
+    error: function(){
+
+      console.log("errore!")
+    }
+  })
+}
+function insertNewSale(months ,salesman){
+
+  setupOptions(months ,salesman);
+
+  var btn = $("#submitButton");
+  var name = $("#salesmanList")
+  var mese = $("#MonthsList");
+  var inp = $("#inputSale");
+
+  btn.click(function(){
+
+
+    if(isNum(inp.val())){
+
+      postNewData({
+
+        salesman: name.val(),
+        amount: inp.val(),
+        date: mese.val(),
+      })
+
+    }
+    else{
+
+      inp.val("");
+      alert("inserisci valore numerico")
+    }
+
+  })
+
 }
 
 function manageData(info){
 
-  monthlySales(info);
-  salesPersentage(info);
+  var mesi = monthlySales(info);
+  var venditori = salesPersentage(info);
+
+  console.log(mesi);
+  console.log(venditori);
+
+  insertNewSale(mesi , venditori)
 }
 
 function getData(){
@@ -153,6 +252,7 @@ function getData(){
     success: function(inData,state){
 
       console.log(inData);
+
       manageData(inData);
 
     },
