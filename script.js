@@ -22,7 +22,7 @@ function getMonth(date, formato){
 
     } while ( mom.format("M") == "Invalid date" );
 
-    console.log(date, " - ", mom.format(formato));
+    // console.log(date, " - ", mom.format(formato));
 
   return mom.format(formato);
 }
@@ -30,7 +30,7 @@ function getMonth(date, formato){
 function drawMonthySales( etichette, valori){
 
   var elem = $("<canvas id='monthlySales'> </canvas>");
-  $(".grafico.first").empty().append(elem);
+  $(".first .grafico").empty().append(elem);
 
   var ctx = document.getElementById('monthlySales').getContext('2d');
   var chart = new Chart(ctx, {
@@ -92,7 +92,7 @@ function monthlySales(inData){
 function drawSalesPie(etichette , valori){
 
   var elem = $("<canvas id='salesmanPie'> </canvas>")
-  $(".grafico.second").empty().append(elem);
+  $(".second .grafico").empty().append(elem);
 
   var ctx = document.getElementById('salesmanPie').getContext('2d');
 
@@ -225,14 +225,12 @@ function insertNewSale(months ,salesman){
       inp.val("");
       alert("inserisci valore numerico")
     }
-
   })
-
 }
 function drawQuarterNumbs(etichette , valori){
 
   var elem = $("<canvas id='quarterSales'> </canvas>")
-  $(".grafico.third").empty().append(elem);
+  $(".third .grafico").empty().append(elem);
 
   var ctx = document.getElementById('quarterSales').getContext('2d');
 
@@ -257,7 +255,7 @@ function drawQuarterNumbs(etichette , valori){
       yAxes: [{
         display: true,
         ticks: {
-          
+
           beginAtZero: true   // minimum value will be 0.
         }
       }]
@@ -265,8 +263,8 @@ function drawQuarterNumbs(etichette , valori){
     }
 
   });
-
 }
+
 function quarterTrend(dati){
 
   var quarterCount = {
@@ -330,6 +328,15 @@ function getData(){
 function init(){
 
   getData();
+
+  var zoom = $("section .fas");
+
+  zoom.click(function(){
+
+    $(".wrapper").toggle();
+    $(this).parent("section").toggleClass("zoom")
+    $(this).toggleClass("fa-search-plus").toggleClass("fa-search-minus")
+    })
 
 }
 

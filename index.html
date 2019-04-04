@@ -25,41 +25,71 @@
   </head>
 
   <body >
-    <nav>
+    <div class="wrapper">
 
-      <div class=".container">
-        <select id="salesmanList" name="">
-
-        </select>
-        <select id="MonthsList" name="">
-
-        </select>
-        <input id="inputSale" name="" value="">
-        <button id="submitButton" type="button" name="button">Submit</button>
-      </div>
-
-    </nav>
-
-    <div class="container">
-
-
-      <h1>Monthly Sales Trend</h1>
-      <div class="grafico first">
-        <canvas id="monthlySales"></canvas>
-      </div>
-    
-      <h1>Salesman Performances</h1>
-
-      <div class="grafico second">
-        <canvas id="salesmanPie"></canvas>
-      </div>
-      <hr>
-      <h1>Quarter Sales Numbers</h1>
-
-      <div class="grafico third">
-        <canvas id="quarterSales"></canvas>
-      </div>
     </div>
+    <div class="container">
+      <section class="newEntry">
+
+        <h1>New Sale Entry</h1>
+        <div class="">
+          <h3>Salesman</h3>
+          <select id="salesmanList" name="">
+          </select>
+        </div>
+        <div class="">
+          <h3>Month</h3>
+
+          <select id="MonthsList" name="">
+          </select>
+        </div>
+
+        <div class="">
+          <h3>Amount</h3>
+
+          <input id="inputSale" name="" value="">
+        </div>
+
+        <button id="submitButton" type="button" name="button">Submit</button>
+
+
+
+      </section>
+
+
+      <section class="first ">
+
+        <i class="fas fa-search-plus"></i>
+        <h1>Monthly Sales Trend</h1>
+        <div class="grafico">
+          <canvas id="monthlySales"></canvas>
+        </div>
+
+      </section>
+
+
+      <section class="second">
+        <i class="fas fa-search-plus"></i>
+        <h1>Salesman Performances</h1>
+
+        <div class="grafico">
+          <canvas id="salesmanPie"></canvas>
+        </div>
+
+      </section>
+
+      <section class="third">
+        <i class="fas fa-search-plus"></i>
+        <h1>Quarter Sales Numbers</h1>
+
+        <div class="grafico">
+        <canvas id="quarterSales"></canvas>
+        </div>
+
+      </section>
+
+    </div>
+
 
 
   </body>
