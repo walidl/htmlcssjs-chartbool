@@ -1,19 +1,24 @@
-
+// fa un ciclo do while su tre tipi di format
+// esce quando il format mi da mese diverso dalla stringa di errore "Invalid date"
 function getMonth(date){
 
   var form = ["DD/MM/YYYY","MMMM","YYYY-MM-DD"];
 
   var j = 0 ;
-  do {
+
+  do{
+
       var mom = moment(date , form[j]);
       j++;
 
-    } while (mom.format("M") == "Invalid date");
+    } while ( mom.format("M") == "Invalid date" );
 
-  return mom.format("M");
+    console.log(date, " - ", mom.format("MMMM"));
+
+  return mom.format("MMMM");
 }
 
-function drawMonthySales(values){
+function drawMonthySales( etichette, valori){
 
   var ctx = document.getElementById('monthlySales').getContext('2d');
   var chart = new Chart(ctx, {
@@ -22,12 +27,12 @@ function drawMonthySales(values){
 
     // The data for our dataset
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July',"August", "September","October","November","December"],
+        labels: etichette,
         datasets: [{
             label: 'Total Monthly Sales',
             backgroundColor: 'rgba(232, 242, 255,0.5)',
             borderColor: 'rgba(0, 0, 0,0.7)',
-            data: values,
+            data: valori,
             tension: 0.2,
         },
       ],
@@ -42,18 +47,35 @@ function drawMonthySales(values){
 
 function monthlySales(inData){
 
-  var form = ["DD/MM/YYYY","MMMM","YYYY-MM-DD"]
-  var yearSales =[0,0,0,0,0,0,0,0,0,0,0,0];
+  var monthsSales= {
+
+    January: 0,
+    February: 0,
+    March: 0 ,
+    April: 0,
+    May: 0,
+    June: 0,
+    July: 0,
+    August: 0,
+    September: 0,
+    October: 0,
+    November: 0,
+    December:0,
+  }
 
   for (var i = 0; i < inData.length; i++) {
 
     var mese = getMonth(inData[i].date);
 
-    yearSales[mese-1] += Number(inData[i].amount);
-  }
+    monthsSales[mese] += Number(inData[i].amount);
 
-  console.log(yearSales);
-  drawMonthySales(yearSales);
+  }
+  var keys = Object.keys(monthsSales);
+  var values = Object.values(monthsSales);
+
+  // console.log(monthsSales);
+  drawMonthySales(keys,values);
+
 }
 
 function isPresent(item,array){
@@ -137,7 +159,6 @@ function manageData(info){
 
   monthlySales(info);
   salesPersentage(info);
-
 }
 
 function getData(){
