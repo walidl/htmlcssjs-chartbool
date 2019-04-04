@@ -41,8 +41,7 @@ function drawMonthySales( etichette, valori){
     // Configuration options go here
     options: {}
   });
-  chart.canvas.parentNode.style.height = '800px';
-  chart.canvas.parentNode.style.width = '800px';
+  
 }
 
 function monthlySales(inData){
@@ -78,15 +77,6 @@ function monthlySales(inData){
 
 }
 
-function isPresent(item,array){
-
-  for (var i = 0; i < array.length; i++) {
-
-    if(array[i][0] == item) return i;
-  }
-  return -1;
-}
-
 function drawSalesPie(etichette , valori){
 
   var ctx = document.getElementById('salesmanPie').getContext('2d');
@@ -116,43 +106,36 @@ function drawSalesPie(etichette , valori){
       }
     }
   });
-  chart.canvas.parentNode.style.height = '800px';
-  chart.canvas.parentNode.style.width = '800px';
+  
 }
 
 function salesPersentage(dati){
 
   var totalRev = 0;
-  var coppiaValori= [];
+
+  var coppiaValori= {};
 
   for (var i = 0; i < dati.length; i++) {
 
-    var index = isPresent(dati[i].salesman, coppiaValori);
+    if(!(dati[i].salesman in coppiaValori)){
 
-    if(index == -1){
-
-      coppiaValori.push([dati[i].salesman , dati[i].amount]);
+      coppiaValori[dati[i].salesman] = dati[i].amount;
     }
     else{
 
-      coppiaValori[index][1] += Number(dati[i].amount);
+      coppiaValori[dati[i].salesman] += Number(dati[i].amount);
     }
 
     totalRev += Number(dati[i].amount);
-
   }
+
 
   console.log(coppiaValori);
-  console.log(totalRev);
-  var venditori = [];
-  var vendite = [];
-  for (var i = 0; i < coppiaValori.length; i++) {
 
-    venditori.push(coppiaValori[i][0]);
-    vendite.push(coppiaValori[i][1])
-  }
-  drawSalesPie(venditori , vendite)
+  var keys = Object.keys(coppiaValori);
+  var values = Object.values(coppiaValori);
 
+  drawSalesPie(keys , values);
 }
 
 function manageData(info){
