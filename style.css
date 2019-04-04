@@ -4,10 +4,13 @@
   padding:0;
   box-sizing: border-box;
 }
+body{
+  background-color: whitesmoke
+}
 
 .container{
 
-  width: 90%;
+  width: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -20,9 +23,12 @@ nav{
   justify-content: center;
   align-items: center;
   height: 40px;
-  background-color: cadetblue
+  background-color: cadetblue;
+  margin-bottom: 30px;
 }
-
+.grafico{
+  width: 100%;
+}
 canvas{
 
   margin: 30px 0;

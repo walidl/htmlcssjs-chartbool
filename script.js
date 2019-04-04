@@ -29,6 +29,9 @@ function getMonth(date){
 
 function drawMonthySales( etichette, valori){
 
+  var elem = $("<canvas id='monthlySales'> </canvas>");
+  $(".grafico.first").empty().append(elem);
+
   var ctx = document.getElementById('monthlySales').getContext('2d');
   var chart = new Chart(ctx, {
 
@@ -51,11 +54,6 @@ function drawMonthySales( etichette, valori){
     // Configuration options go here
     options: {}
   });
-
-  // chart.reset();
-  // chart.clear();
-  // chart.render();
-  // chart.update();
 }
 
 function monthlySales(inData){
@@ -93,6 +91,9 @@ function monthlySales(inData){
 
 function drawSalesPie(etichette , valori){
 
+  var elem = $("<canvas id='salesmanPie'> </canvas>")
+  $(".grafico.second").empty().append(elem);
+
   var ctx = document.getElementById('salesmanPie').getContext('2d');
 
   var chart = new Chart(ctx, {
@@ -121,10 +122,7 @@ function drawSalesPie(etichette , valori){
       }
     }
   });
-  // chart.reset();
-  // chart.clear();
-  // chart.render();
-  // chart.update();
+
 }
 
 function salesPersentage(dati){
