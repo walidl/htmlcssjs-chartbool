@@ -128,7 +128,6 @@ function drawSalesPie(etichette , valori){
 function salesPersentage(dati){
 
   var totalRev = 0;
-
   var coppiaValori= {};
 
   for (var i = 0; i < dati.length; i++) {
@@ -150,6 +149,12 @@ function salesPersentage(dati){
 
   var keys = Object.keys(coppiaValori);
   var values = Object.values(coppiaValori);
+
+	for (var i = 0; i < values.length; i++) {
+		
+		values[i] *= (100/totalRev);
+		values[i] = values[i].toFixed(2)
+	}
 
   drawSalesPie(keys , values);
 
@@ -181,6 +186,7 @@ function setupOptions(months ,salesman){
   }
 
 }
+
 function postNewData(dati){
 
   $.ajax({
@@ -198,6 +204,7 @@ function postNewData(dati){
     }
   })
 }
+
 function insertNewSale(months ,salesman){
 
   setupOptions(months ,salesman);
@@ -227,6 +234,7 @@ function insertNewSale(months ,salesman){
     }
   })
 }
+
 function drawQuarterNumbs(etichette , valori){
 
   var elem = $("<canvas id='quarterSales'> </canvas>")

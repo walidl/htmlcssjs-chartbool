@@ -59,10 +59,16 @@ section.newEntry div{
   width: 40%;
 }
 
-section.newEntry div h3{
+section.newEntry h3{
 
+  width: 80px;
   margin-right: 20px;
 }
+section.newEntry input{
+
+  width: 90px;
+}
+
 
 .grafico{
 
